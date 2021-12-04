@@ -1,0 +1,181 @@
+1.(a)
+    int main()
+    {
+      int arr[3] = {5, 10, 15};
+      int *ptr = arr;
+    
+      *ptr = 30;       // set arr[0] to 30
+      *(ptr + 1) = 20; // set arr[1] to 20
+      ptr += 2;
+      ptr[0] = 10; // set arr[2] to 10
+    
+      int *tmp = arr;
+      while (ptr >= tmp)
+      {
+        std::cout << *tmp << std::endl; // print values
+        tmp++;
+      }
+    }
+
+1.(b)
+    /* this function didn't work because the mutation of the pointer
+    was only valid within the scope of findMax. in order to actually
+    change what address in memory the pointer points to, findMax
+    would either have to take in int **pToMax or just allow it to
+    change by reference using int *&pToMax.
+    */
+    void findMax(int arr[], int n, int *&pToMax)
+    {
+      if (n <= 0)
+        return; // no items, no maximum!
+    
+      pToMax = arr;
+    
+      for (int i = 1; i < n; i++)
+      {
+        if (arr[i] > *pToMax)
+          pToMax = arr + i;
+      }
+    }
+
+1.(c)
+    /* This code did not work as ptr was not intialized. In order to fix this,
+    one would either have to create an integer and point ptr to it,
+    or dynamically allocate memory using malloc.
+    */
+    int main()
+    {
+      int tmp;
+      int *ptr = &tmp;
+      /*
+      int *ptr = (int *)malloc(sizeof(int));
+      */
+      computeCube(5, ptr);
+      std::cout << "Five cubed is " << *ptr << std::endl;
+    }
+    
+1.(d)
+    /* When accesing the current character in the string, this code uses
+    str1 and str2. This referes to the location in memory of the character,
+    not the character itself. To fix this, these locations can be dereferenced
+    using the unary * operator: *str1 and *str2.
+    */
+    bool strequal(const char str1[], const char str2[])
+    {
+        while (*str1 != 0 && *str2 != 0) // zero bytes at ends
+        {
+            if (*str1 != *str2) // compare corresponding characters
+                return false;
+            str1++; // advance to the next character
+            str2++;
+        }
+        return *str1 == *str2; // both ended at same time?
+    }
+
+1.(e)
+    /*This program is assigning ptr to an array that is local to the
+    getPtrToArray function. When getPtrToArray is finished executing,
+    all variables within it are destroyted, so the array returned is 
+    an array that no longer exists in memory. This means that ptr
+    just refers to random values on the stack.*/
+2.
+    (a) double *cat;
+    (b) double mouse[5];
+    (c) cat = &mouse[4];
+    (d) *cat = 25;
+    (e) *(mouse + 3) = 54;
+    (f) cat -= 3
+    (g) cat[1] = 17;
+    (h) cat[0] = 42;
+    (i) bool d = cat == mouse;
+    (j) bool b = *cat == *(cat + 1);
+    
+3.(a)
+    double mean(const double *scores, int numScores)
+    {
+        const double *ptr = scores;
+        double tot = 0;
+        int i = 0;
+        for (int i = 0; i < numScores; i++)
+        {
+            tot += *(ptr + i);
+        }
+        return tot / numScores;
+    }
+
+3.(b)
+    const char *findTheChar(const char *str, char chr)
+    {
+        for (int k = 0; *(str + k) != 0; k++)
+            if (*(str + k) == chr)
+                return str + k;
+    
+        return nullptr;
+    }
+
+3.(c)
+const char *findTheChar(const char *str, char chr)
+    {
+        for (; *str != 0; str++)
+            if (*str == chr)
+                return str;
+        return nullptr;
+    }
+
+4.
+    // returns the pointer to max of 2 ints
+    int *maxwell(int *a, int *b)
+    {
+        if (*a > *b)
+            return a;
+        else
+            return b;
+    }
+    
+    // does nothing (swaps the addresses of 2 pointers within the scope of itself)
+    void swap1(int *a, int *b)
+    {
+        int *temp = a;
+        a = b;
+        b = temp;
+    }
+    
+    // swap the values stored in 2 pointers
+    void swap2(int *a, int *b)
+    {
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+    
+    int main()
+    {
+        int array[6] = {5, 3, 4, 17, 22, 19};
+    
+        int *ptr = maxwell(array, &array[2]); // max(5,4) = 5 so ptr = array[0]
+        *ptr = -1;                            // array[0] = -1
+        ptr += 2;                             // ptr = &array[2];
+        ptr[1] = 9;                           // array[3] = 9
+        *(array + 1) = 79;                    // array[1] = 79
+        // array is now equal to {-1, 79, 4, 9, 22, 19}
+        cout << &array[5] - ptr << endl; // &array[5] - &array[2] = 5-2 = 3
+    
+        swap1(&array[0], &array[1]); // swap1 changes nothing as shown in comments above
+        swap2(array, &array[2]);     // the values in array[0] and array[2] are swapped
+        // array is now equal to {4, 79, -1, 9, 22, 19}
+    
+        for (int i = 0; i < 6; i++)
+            // prints 4 79 -1 9 22 19 (with newlines instead of spaces)
+            cout << array[i] << endl; 
+        }
+5.
+    void removeS(char *str){
+        char *parsed = str;
+        for(; *str != 0; str++){
+            if(tolower(*str) != 's'){
+                *parsed = *str;
+                parsed++;
+            }
+        }
+        *parsed = '\0';
+    }

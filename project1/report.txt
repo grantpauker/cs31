@@ -1,0 +1,15 @@
+1. In part 5 I first tried the numbers 100, 50, and 50 which resulted in the output:
+	30.0% prefer being at school in person.
+	50.0% prefer doing school from home.
+	More students like doing school from home than being at school in person.
+This is nonsensical as the percentages don't add to 100%.
+
+I then tried the numbers 0, 10, and 0. This resulted in the output:
+	inf% prefer being at school in person.
+	-nan% prefer doing school from home.
+	More students like being at school in person than doing school at home.
+This is nonsensical as the percentages are both infity and not a number. This does, however, make sense as division by 0 errors likely occured.
+
+2. For step 6 in logic_error.cpp on line 30, I changed '>' to '<'. This means that when in reality more students like being at school in person, the output will display the opposite and vice-versa.
+
+3. For step 7 in compile_error.cpp I deleted line 11, "int likeAtHome;". Because all variables neeed to be declared before they are initialized, this caused an error. I also removed a semicolon on line 23 which prevented the program from compiling. These 2 errors were easily caught by the compiler, recommending that I declare likeAtHome and add a semicolon to line 23.
