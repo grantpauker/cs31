@@ -1,4 +1,4 @@
-# CS 31
+# UCLA CS 31 (Fall 2021)
 
 | Project | Score |
 | ------- | ----- |
